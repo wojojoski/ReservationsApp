@@ -1,0 +1,63 @@
+﻿@model Reservations
+
+<h1>Add information about the reservation you offer</h1>
+<form asp-controller="Reservations" asp-action="AddReservation" method="post">
+    <div>
+        <label asp-for="Voivodeship">Voivodeship</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="Voivodeship" />
+        <span asp-validation-for="Voivodeship" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="City">City</label>
+    </div>
+    <div>
+        <input class ="form-control" asp-for="City" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="StreetAndNumber">Street and Number</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="StreetAndNumber" />
+        <span asp-validation-for="StreetAndNumber" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="DateAndTime">Date and Time</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="DateAndTime" style="width: 165px;"/>
+        <span asp-validation-for="DateAndTime" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="City">Available Time (in minutes)</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="AvailableTime" />
+        <span asp-validation-for="AvailableTime" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="NumberOfSeats">Number of Seats</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="NumberOfSeats" />
+    </div>
+    <div>
+        <label asp-for="Comment">Comment</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="Comment" />
+    </div>
+    <div>
+        <label asp-for="City">Price per Hour</label>
+    </div>
+    <div>
+        <input class="form-control" asp-for="PricePerHour" />
+        <span asp-validation-for="PricePerHour" class="text-danger"></span>
+    </div>
+
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
