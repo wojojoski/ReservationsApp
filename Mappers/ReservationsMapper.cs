@@ -6,9 +6,9 @@ namespace ReservationsApp.Mappers
 {
     public class ReservationsMapper
     {
-        public static Reservations FromEntity(ReservationsEntity entity)
+        public static Reservation FromEntity(ReservationsEntity entity)
         {
-            return new Reservations()
+            return new Reservation()
             {
                 ReservationId = entity.ReservationId,
                 Voivodeship = entity.Voivodeship,
@@ -21,7 +21,7 @@ namespace ReservationsApp.Mappers
                 PricePerHour = entity.PricePerHour,
             };
         }
-        public static ReservationsEntity ToEntity(Reservations model)
+        public static ReservationsEntity ToEntity(Reservation model)
         {
             return new ReservationsEntity()
             {

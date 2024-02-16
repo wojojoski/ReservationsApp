@@ -14,14 +14,14 @@ namespace ReservationsApp.Services
         {
             _context = context;
         }
-        public int AddReservation(Reservations reservations)
+        public int AddReservation(Reservation reservations)
         {
             var e = _context.Reservations.Add(ReservationsMapper.ToEntity(reservations));
             _context.SaveChanges();
             return e.Entity.ReservationId;
         }
 
-        public List<Reservations> FindAllReservations()
+        public List<Reservation> FindAllReservations()
         {
             return _context.Reservations.Select(e => ReservationsMapper.FromEntity(e)).ToList();
         }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ReservationsApp.Models
 {
-    public class Reservations
+    public class Reservation
     {
         [Key]
         public int ReservationId { get; set; }

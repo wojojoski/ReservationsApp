@@ -1,10 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ReservationsApp.Data.Entities;
 using ReservationsApp.Models;
 
 namespace ReservationsApp.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<ReservationsEntity> Reservations { get; set; }
         private string DbPath { get; set; }
@@ -20,8 +22,82 @@ namespace ReservationsApp.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+
+            string ADMIN_ID = Guid.NewGuid().ToString();
+            string ROLE_ID = Guid.NewGuid().ToString();
+            string USER_ID = Guid.NewGuid().ToString();
+            string USER_ROLE_ID = Guid.NewGuid().ToString();
+
+            //Adding admin role
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Name = "admin",
+                NormalizedName = "ADMIN",
+                Id = ROLE_ID,
+                ConcurrencyStamp = ROLE_ID
+            });
+
+            //Adding user role
+            modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
+            {
+                Name = "user",
+                NormalizedName = "USER",
+                Id = USER_ROLE_ID,
+                ConcurrencyStamp = USER_ROLE_ID
+            });
+
+            //Creating user
+            var user = new IdentityUser
+            {
+                Id = USER_ID,
+                Email = "michael@gm.com",
+                EmailConfirmed = true,
+                UserName = "michael",
+                NormalizedUserName = "MICHAEL",
+                NormalizedEmail = "MICHAEL@GM.COM"
+            };
+
+            //Creating admin as a user 
+            var admin = new IdentityUser
+            {
+                Id = ADMIN_ID,
+                Email = "michal@gm.com",
+                EmailConfirmed = true,
+                UserName = "michal",
+                NormalizedUserName = "ADMIN",
+                NormalizedEmail = "MICHAL@GM.COM"
+            };
+
+            //Password hasing
+            PasswordHasher<IdentityUser> ph = new PasswordHasher<IdentityUser>();
+            admin.PasswordHash = ph.HashPassword(admin, "1234abcd!@#$ABCD");
+
+            PasswordHasher<IdentityUser> phUser = new PasswordHasher<IdentityUser>();
+            user.PasswordHash = phUser.HashPassword(user, "QWERTY");
+
+            //Save user
+            modelBuilder.Entity<IdentityUser>().HasData(admin);
+
+            modelBuilder.Entity<IdentityUser>().HasData(user);
+
+            //assigning an administrator role to a user
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = ROLE_ID,
+                UserId = ADMIN_ID,
+            });
+
+            //assigning an user role to a user
+            modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
+            {
+                RoleId = USER_ROLE_ID,
+                UserId = USER_ID
+            });
+
             modelBuilder.Entity<ReservationsEntity>().HasData(
-                new Reservations()
+                new Reservation()
                 {
                     ReservationId = 1,
                     Voivodeship = "Mazowieckie",
@@ -33,7 +109,7 @@ namespace ReservationsApp.Data
                     Comment = "The hall of the Sejm of the RP",
                     PricePerHour = 1000
                 },
-                new Reservations()
+                new Reservation()
                 {
                     ReservationId = 2,
                     Voivodeship = "Podkarpackie",

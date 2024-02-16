@@ -4,7 +4,7 @@ namespace ReservationsApp.Interfaces
 {
     public interface IReservationService 
     {
-        int AddReservation(Reservations model);
-        List<Reservations> FindAllReservations();
+        int AddReservation(Reservation model);
+        List<Reservation> FindAllReservations();
     }
 }
