@@ -8,10 +8,10 @@ namespace ReservationsApp.Models
         [Key]
         public int ReservationId { get; set; }
         [Required(ErrorMessage = "Enter Voivodeship")]
-        [DisplayName("Voivodeship")]
+
         public string Voivodeship { get; set; }
         [Required(ErrorMessage = "Enter City")]
-        [DisplayName("City")]
+
         public string City { get; set; }
         [Required(ErrorMessage = "Enter Street and Number")]
         [DisplayName("Street and Number")]
@@ -25,11 +25,13 @@ namespace ReservationsApp.Models
         public double AvailableTime { get; set; }
         [DisplayName("Number of seats")]
         public int? NumberOfSeats {  get; set; }
-        [DisplayName("Comment")]
+
         public string? Comment { get; set; }
         [Required(ErrorMessage ="Enter Price")]
         [DisplayName("Price per hour")]
         public double PricePerHour { get; set; }
+        [DisplayName("User Email")]
+        public string? UserEmail { get; set; }
 
     }
 }

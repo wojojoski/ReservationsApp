@@ -19,6 +19,7 @@ namespace ReservationsApp.Mappers
                 NumberOfSeats = entity.NumberOfSeats,
                 Comment = entity.Comment,
                 PricePerHour = entity.PricePerHour,
+                UserEmail = entity.UserEmail,
             };
         }
         public static ReservationsEntity ToEntity(Reservation model)
@@ -34,6 +35,7 @@ namespace ReservationsApp.Mappers
                 NumberOfSeats = model.NumberOfSeats,
                 Comment = model.Comment,
                 PricePerHour = model.PricePerHour,
+                UserEmail = model.UserEmail,
             };
         }
     }

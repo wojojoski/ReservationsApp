@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReservationsApp.Data;
 
@@ -10,9 +11,11 @@ using ReservationsApp.Data;
 namespace ReservationsApp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240228205654_AdminUser")]
+    partial class AdminUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.2");
@@ -45,15 +48,15 @@ namespace ReservationsApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3d0ef646-2dd3-4852-b49b-2c01630b3a52",
-                            ConcurrencyStamp = "3d0ef646-2dd3-4852-b49b-2c01630b3a52",
+                            Id = "5de75cda-bd39-45bf-804c-f0f1ed3aba9f",
+                            ConcurrencyStamp = "5de75cda-bd39-45bf-804c-f0f1ed3aba9f",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "980e206f-288c-446a-99ec-8e58f81489fb",
-                            ConcurrencyStamp = "980e206f-288c-446a-99ec-8e58f81489fb",
+                            Id = "81a8783a-7bab-4849-bfbd-397df51157c2",
+                            ConcurrencyStamp = "81a8783a-7bab-4849-bfbd-397df51157c2",
                             Name = "user",
                             NormalizedName = "USER"
                         });
@@ -148,35 +151,35 @@ namespace ReservationsApp.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "70a6e466-e2f8-410b-ad81-88f6dbfebf42",
+                            Id = "bec75c21-f627-4218-b8a7-c3038360a649",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d296b81a-9b52-42b2-9fb8-943f16b1269c",
+                            ConcurrencyStamp = "cdae3940-9a1a-474d-bfc1-bed99dd49034",
                             Email = "michal@gm.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MICHAL@GM.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKdI/g1v0slYj+TGEl5Bd1cQ7C2bx+QlOYk/TrUxRNjQfxC9cauGv7BABKI1l7WNVQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEL+4PabzxUtg37V/MPOhCcR+1GVFFYrMnGchenlaN4t2wO/CYkURc3B4wlMOFyqLvQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "936fdba6-85bc-438e-ae2c-1d39c7a7de53",
+                            SecurityStamp = "d83a220a-bf36-433f-8e45-8f6ca2ea9c6b",
                             TwoFactorEnabled = false,
-                            UserName = "michal@gm.com"
+                            UserName = "michal"
                         },
                         new
                         {
-                            Id = "b915af1e-4a90-42d7-9704-b40fb812f7af",
+                            Id = "b653c063-d41c-42dc-9682-e287bbb29587",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c90d8461-70d0-4b5a-ba7c-c6b9b2e747d6",
+                            ConcurrencyStamp = "795116cf-507e-49b5-ab39-41d6c48f8c88",
                             Email = "michael@gm.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "MICHAEL@GM.COM",
                             NormalizedUserName = "MICHAEL",
-                            PasswordHash = "AQAAAAIAAYagAAAAEEgj/bgJcOi9w7yphHQ2On5H/dA7YkIYauiYEj1yr+yVYNDBLt9xBQ2sqxL7MBQK1g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELcLz1xa3Gwca5kj8d9rypIjYgx2d6XSkqQWmBxa4v+v2iPzNdLIcqjMckJqNeIbsQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d231ca79-611b-493b-bd79-731a1a84fb2d",
+                            SecurityStamp = "0007cd8d-4d86-4365-9138-cf1a1d3cd13f",
                             TwoFactorEnabled = false,
-                            UserName = "michael@gm.com"
+                            UserName = "michael"
                         });
                 });
 
@@ -242,13 +245,13 @@ namespace ReservationsApp.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "70a6e466-e2f8-410b-ad81-88f6dbfebf42",
-                            RoleId = "3d0ef646-2dd3-4852-b49b-2c01630b3a52"
+                            UserId = "bec75c21-f627-4218-b8a7-c3038360a649",
+                            RoleId = "5de75cda-bd39-45bf-804c-f0f1ed3aba9f"
                         },
                         new
                         {
-                            UserId = "b915af1e-4a90-42d7-9704-b40fb812f7af",
-                            RoleId = "980e206f-288c-446a-99ec-8e58f81489fb"
+                            UserId = "b653c063-d41c-42dc-9682-e287bbb29587",
+                            RoleId = "81a8783a-7bab-4849-bfbd-397df51157c2"
                         });
                 });
 
@@ -301,10 +304,6 @@ namespace ReservationsApp.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Voivodeship")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -324,7 +323,6 @@ namespace ReservationsApp.Migrations
                             NumberOfSeats = 460,
                             PricePerHour = 1000.0,
                             StreetAndNumber = "Wiejska 4",
-                            UserEmail = "michael@gm.com",
                             Voivodeship = "Mazowieckie"
                         },
                         new
@@ -337,7 +335,6 @@ namespace ReservationsApp.Migrations
                             NumberOfSeats = 150,
                             PricePerHour = 100.0,
                             StreetAndNumber = "Juliusza Słowackiego 2",
-                            UserEmail = "michael@gm.com",
                             Voivodeship = "Podkarpackie"
                         });
                 });
