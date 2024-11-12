@@ -2,7 +2,7 @@
 
 namespace ReservationsApp.Controllers
 {
-    public class YourOffers : Controller
+    public class BookReservationsController : Controller
     {
         public IActionResult Index()
         {

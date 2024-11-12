@@ -91,6 +91,9 @@ namespace ReservationsApp.Data
             //Login: Patryk@gm.com
             //Password:Patryk1!
 
+            //Login: Marcin@gm.com
+            //Password: Marcin1!
+
             //assigning an administrator role to a user
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {

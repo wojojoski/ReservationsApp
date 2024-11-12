@@ -4,6 +4,7 @@ using ReservationsApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using ReservationsApp.Services;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace ReservationsApp.Controllers
 {
@@ -11,9 +12,11 @@ namespace ReservationsApp.Controllers
     public class ReservationsController : Controller
     {
         private readonly IReservationService _reservationservice;
-        public ReservationsController(IReservationService reservationservice)
+        private readonly UserManager<IdentityUser> _userManager;
+        public ReservationsController(IReservationService reservationservice, UserManager<IdentityUser> userManager)
         {
             _reservationservice = reservationservice;
+            _userManager = userManager;
         }
         [AllowAnonymous]
         public IActionResult Index()
@@ -40,6 +43,19 @@ namespace ReservationsApp.Controllers
                 return View(model);
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> UserOffers()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user == null)
+            {
+                return Unauthorized();
+            }
+            var reservations = await _reservationservice.FindReservationsByUserEmailAsync(user.Email);
+
+            return View(reservations);
+        }
+
         //[HttpPost]
         //public IActionResult EditReservation(Reservation model)
         //{

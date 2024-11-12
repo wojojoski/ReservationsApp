@@ -61,7 +61,11 @@ namespace ReservationsApp.Services
         {
             return _context.Reservations.Select(x => ReservationsMapper.FromEntity(x)).ToList();
         }
-
+        
+        public async Task<List<Reservation>> FindReservationsByUserEmailAsync(string userEmail)
+        {
+            return await _context.Reservations.Where(r => r.UserEmail == userEmail).Select(r => ReservationsMapper.FromEntity(r)).ToListAsync();
+        }
     }
 
     public interface IReservationService
@@ -71,5 +75,6 @@ namespace ReservationsApp.Services
         public void Delete(int id);
         public Reservation? FindReservationById(int id);
         List<Reservation> FindAllReservations();
+        Task<List<Reservation>> FindReservationsByUserEmailAsync(string userEmail);
     }
 }

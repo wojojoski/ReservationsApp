@@ -1,12 +1,12 @@
 ﻿@model List<Reservation>
 
-<h1>List of available reservations</h1>
+<h1>List of your reservations offers</h1>
 <a class="btn btn-primary" asp-action="AddReservation" asp-controller="Reservations">Offer Reservation</a>
 <a class="btn btn-primary" asp-action="" asp-controller="Reservations">Search for Reservation</a>
 
-@if(Model.Count > 0)
+@if (Model.Count > 0)
 {
-    <table class="table"> 
+    <table class="table">
         <thead>
             <tr>
                 <th>
@@ -22,7 +22,7 @@
                     @Html.DisplayNameFor(model => model[0].DateAndTime)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].AvailableTime) 
+                    @Html.DisplayNameFor(model => model[0].AvailableTime)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model[0].NumberOfSeats)
@@ -34,28 +34,23 @@
                     @Html.DisplayNameFor(model => model[0].PricePerHour)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].UserEmail)
-                </th>
-                <th>
-                    Book now 
+                    Book now
                 </th>
             </tr>
         </thead>
         <tbody>
             @foreach (var reservation in @Model)
             {
-            <tr>
-            <td>@reservation.Voivodeship</td>
-            <td>@reservation.City</td>
-            <td>@reservation.StreetAndNumber</td>
-            <td>@reservation.DateAndTime</td>
-            <td>@reservation.AvailableTime min</td>
-            <td>@reservation.NumberOfSeats</td>
-            <td>@reservation.Comment</td>
-            <td>@reservation.PricePerHour $</td>
-            <td>@reservation.UserEmail</td>
-                    <td><button class="btn btn-primary" asp-action="BookNow" asp-controller="Reservations" asp-route-id="@reservation.ReservationId">Book</button></td>
-            </tr>
+                <tr>
+                    <td>@reservation.Voivodeship</td>
+                    <td>@reservation.City</td>
+                    <td>@reservation.StreetAndNumber</td>
+                    <td>@reservation.DateAndTime</td>
+                    <td>@reservation.AvailableTime min</td>
+                    <td>@reservation.NumberOfSeats</td>
+                    <td>@reservation.Comment</td>
+                    <td>@reservation.PricePerHour $</td>
+                </tr>
             }
         </tbody>
 
