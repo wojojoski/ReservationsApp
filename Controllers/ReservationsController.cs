@@ -88,6 +88,29 @@ namespace ReservationsApp.Controllers
             return RedirectToAction("UserReservations");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EditOffer(int id)
+        {
+            //var user = await _userManager.GetUserAsync(User);
+            var reservation = await _reservationservice.FindReservationByIdAsync(id);
+            if (reservation == null)
+            {
+                return NotFound();
+            }
+            return View(reservation);
+        }
+
+        [HttpPost]
+        public IActionResult EditOffer(Reservation reservation)
+        {
+            if(ModelState.IsValid)
+            {
+                _reservationservice.UpdateOfferByOwner(reservation);
+                return RedirectToAction(nameof(UserOffers));
+            }
+            return View(reservation);
+        }
+
         //[HttpPost]
         //public IActionResult EditReservation(Reservation model)
         //{

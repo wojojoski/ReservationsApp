@@ -46,6 +46,15 @@ namespace ReservationsApp.Services
                 _context.SaveChanges();
             }
         }
+        public void UpdateOfferByOwner(Reservation reservation)
+        {
+            var offerToEdit = _context.Reservations.AsNoTracking().FirstOrDefault(x => x.ReservationId == reservation.ReservationId);
+            if(offerToEdit != null)
+            {
+                _context.Reservations.Update(ReservationsMapper.ToEntity(reservation));
+                _context.SaveChanges();
+            }
+        }
 
         public void Delete(int id)
         {
@@ -87,6 +96,7 @@ namespace ReservationsApp.Services
     {
         Task<int> AddReservation(Reservation model);
         public void UpdateBookedReservation(Reservation model);
+        public void UpdateOfferByOwner(Reservation reservation);
         public void Delete(int id);
         public Reservation? FindReservationById(int id);
         Task<Reservation?> FindReservationByIdAsync(int id);

@@ -1,7 +1,13 @@
 ﻿@model Reservation
 
-<h1>Add information about the reservation you offer</h1>
-<form asp-controller="Reservations" asp-action="AddReservation" method="post">
+<h1>Edit reservation</h1>
+<form asp-controller="Reservations" asp-action="EditOffer" method="post">
+    <div>
+        <input asp-for="ReservationId" type="hidden" />
+        <input asp-for="UserEmail" type="hidden" />
+        <input asp-for="IsBooked" type="hidden" />
+        <input asp-for="BookedByUserId" type="hidden" />
+    </div>
     <div>
         <label asp-for="Voivodeship">Voivodeship</label>
         <input class="form-control" asp-for="Voivodeship" />
@@ -9,7 +15,7 @@
     </div>
     <div>
         <label asp-for="City">City</label>
-        <input class ="form-control" asp-for="City" />
+        <input class="form-control" asp-for="City" />
         <span asp-validation-for="City" class="text-danger"></span>
     </div>
     <div>
@@ -19,7 +25,7 @@
     </div>
     <div>
         <label asp-for="DateAndTime">Date and Time</label>
-        <input class="form-control" asp-for="DateAndTime" style="width: 165px;"/>
+        <input class="form-control" asp-for="DateAndTime" style="width: 165px;" />
         <span asp-validation-for="DateAndTime" class="text-danger"></span>
     </div>
     <div>
@@ -42,6 +48,6 @@
     </div>
 
     <div>
-        <button type="submit">Submit</button>
+        <button type="submit" class="btn alert-primary">Save</button>
     </div>
 </form>
