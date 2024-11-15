@@ -36,10 +36,15 @@ namespace ReservationsApp.Services
             return x.Entity.ReservationId;
         }
 
-        public void UpdateReservation(Reservation model)
+        public void UpdateBookedReservation(Reservation model)
         {
-            _context.Reservations.Update(ReservationsMapper.ToEntity(model));
-            _context.SaveChanges();
+            var existingEntity = _context.Reservations.Find(model.ReservationId);
+            if(existingEntity != null)
+            {
+                existingEntity.IsBooked = model.IsBooked;
+                existingEntity.BookedByUserId = model.BookedByUserId;
+                _context.SaveChanges();
+            }
         }
 
         public void Delete(int id)
@@ -57,24 +62,36 @@ namespace ReservationsApp.Services
             return ReservationsMapper.FromEntity(_context.Reservations.Find(id));
         }
 
+        public async Task<Reservation?> FindReservationByIdAsync(int id)
+        {
+            var entity = await _context.Reservations.FindAsync(id);
+            return entity != null ? ReservationsMapper.FromEntity(entity) : null;
+        }
+
         public List<Reservation> FindAllReservations()
         {
-            return _context.Reservations.Select(x => ReservationsMapper.FromEntity(x)).ToList();
+            return _context.Reservations.Where(r=> r.IsBooked != true).Select(x => ReservationsMapper.FromEntity(x)).ToList();
         }
         
         public async Task<List<Reservation>> FindReservationsByUserEmailAsync(string userEmail)
         {
             return await _context.Reservations.Where(r => r.UserEmail == userEmail).Select(r => ReservationsMapper.FromEntity(r)).ToListAsync();
         }
+        public async Task<List<Reservation>> FindBookedReservationsByUserIdAsync(string userId)
+        {
+            return await _context.Reservations.AsNoTracking().Where(r => r.BookedByUserId != null && r.BookedByUserId == userId).Select(r => ReservationsMapper.FromEntity(r)).ToListAsync();
+        }
     }
 
     public interface IReservationService
     {
         Task<int> AddReservation(Reservation model);
-        public void UpdateReservation(Reservation model);
+        public void UpdateBookedReservation(Reservation model);
         public void Delete(int id);
         public Reservation? FindReservationById(int id);
+        Task<Reservation?> FindReservationByIdAsync(int id);
         List<Reservation> FindAllReservations();
         Task<List<Reservation>> FindReservationsByUserEmailAsync(string userEmail);
+        Task<List<Reservation>> FindBookedReservationsByUserIdAsync(string userId);
     }
 }

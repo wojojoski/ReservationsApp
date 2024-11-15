@@ -20,6 +20,8 @@ namespace ReservationsApp.Mappers
                 Comment = entity.Comment,
                 PricePerHour = entity.PricePerHour,
                 UserEmail = entity.UserEmail,
+                IsBooked = entity.IsBooked,
+                BookedByUserId = entity.BookedByUserId,
             };
         }
         public static ReservationsEntity ToEntity(Reservation model)
@@ -36,6 +38,8 @@ namespace ReservationsApp.Mappers
                 Comment = model.Comment,
                 PricePerHour = model.PricePerHour,
                 UserEmail = model.UserEmail,
+                IsBooked = model.IsBooked,
+                BookedByUserId = model.BookedByUserId,
             };
         }
     }

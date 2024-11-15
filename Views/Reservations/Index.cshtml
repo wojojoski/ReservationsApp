@@ -54,7 +54,13 @@
             <td>@reservation.Comment</td>
             <td>@reservation.PricePerHour $</td>
             <td>@reservation.UserEmail</td>
-                    <td><button class="btn btn-primary" asp-action="BookNow" asp-controller="Reservations" asp-route-id="@reservation.ReservationId">Book</button></td>
+@*          <td><button class="btn btn-primary" asp-action="BookNow" asp-controller="Reservations" asp-route-id="@reservation.ReservationId">Book</button></td> *@
+            <td>
+                        <form asp-action="BookNow" asp-controller="Reservations" method="post">
+                            <input type="hidden" name="id" value="@reservation.ReservationId" />
+                            <button type="submit" class="btn btn-primary">Book</button>
+                        </form>
+            </td>
             </tr>
             }
         </tbody>

@@ -94,6 +94,9 @@ namespace ReservationsApp.Data
             //Login: Marcin@gm.com
             //Password: Marcin1!
 
+            //Login: Bartek@gm.com
+            //Password: Bartek1!
+
             //assigning an administrator role to a user
             modelBuilder.Entity<IdentityUserRole<string>>().HasData(new IdentityUserRole<string>
             {
@@ -120,7 +123,8 @@ namespace ReservationsApp.Data
                     NumberOfSeats = 460,
                     Comment = "The hall of the Sejm of the RP",
                     PricePerHour = 1000,
-                    UserEmail = "michael@gm.com"
+                    UserEmail = "michael@gm.com",
+                    IsBooked = false
                 },
                 new Reservation()
                 {
@@ -133,7 +137,8 @@ namespace ReservationsApp.Data
                     NumberOfSeats = 150,
                     Comment = "Cinema hall",
                     PricePerHour = 100,
-                    UserEmail = "michael@gm.com"
+                    UserEmail = "michael@gm.com",
+                    IsBooked = false
                 }
             );
         }

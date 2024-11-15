@@ -35,8 +35,9 @@ namespace ReservationsApp.Controllers
         {
             if (ModelState.IsValid)
             {
-            _reservationservice.AddReservation(model);
-            return RedirectToAction("Index");
+                model.IsBooked = false;
+                _reservationservice.AddReservation(model);
+                return RedirectToAction("Index");
             }
             else
             {
@@ -54,6 +55,37 @@ namespace ReservationsApp.Controllers
             var reservations = await _reservationservice.FindReservationsByUserEmailAsync(user.Email);
 
             return View(reservations);
+        }
+        [HttpGet]
+        public async Task<IActionResult> UserReservations()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+            var reservations = await _reservationservice.FindBookedReservationsByUserIdAsync(user.Id);
+            return View(reservations);
+        }
+        [HttpPost]
+        public async Task<IActionResult> BookNow(int id)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var reservation = await _reservationservice.FindReservationByIdAsync(id);
+            //var reservation = _reservationservice.FindReservationById(id);
+            if(reservation == null  || reservation.IsBooked)
+            {
+                return NotFound();
+            }
+            reservation.IsBooked = true;
+            reservation.BookedByUserId = user.Id;
+            _reservationservice.UpdateBookedReservation(reservation);
+            return RedirectToAction("UserReservations");
         }
 
         //[HttpPost]

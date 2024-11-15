@@ -24,5 +24,7 @@ namespace ReservationsApp.Data.Entities
         public string? Comment { get; set; }
         public double PricePerHour { get; set; }
         public string UserEmail { get; set; }
+        public bool IsBooked {  get; set; }
+        public string? BookedByUserId {  get; set; }
     }
 }

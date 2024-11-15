@@ -32,6 +32,8 @@ namespace ReservationsApp.Models
         public double PricePerHour { get; set; }
         [DisplayName("User Email")]
         public string? UserEmail { get; set; }
+        public bool IsBooked { get; set; }
+        public string? BookedByUserId {  get; set; }
 
     }
 }

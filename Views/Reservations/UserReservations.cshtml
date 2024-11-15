@@ -1,0 +1,59 @@
+﻿@model List<Reservation>
+
+<h1>List of your booked reservations</h1>
+<a class="btn btn-primary" asp-action="" asp-controller="Reservations">Search for Reservation</a>
+
+@if (Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Voivodeship)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].City)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].StreetAndNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].DateAndTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].AvailableTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].NumberOfSeats)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].Comment)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].PricePerHour)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model[0].UserEmail)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reservation in @Model)
+            {
+                <tr>
+                    <td>@reservation.Voivodeship</td>
+                    <td>@reservation.City</td>
+                    <td>@reservation.StreetAndNumber</td>
+                    <td>@reservation.DateAndTime</td>
+                    <td>@reservation.AvailableTime min</td>
+                    <td>@reservation.NumberOfSeats</td>
+                    <td>@reservation.Comment</td>
+                    <td>@reservation.PricePerHour $</td>
+                    <td>@reservation.UserEmail</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
