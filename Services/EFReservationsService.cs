@@ -56,7 +56,7 @@ namespace ReservationsApp.Services
             }
         }
 
-        public void Delete(int id)
+        public void DeleteOffer(int id)
         {
             ReservationsEntity? reservationsEntity = _context.Reservations.Find(id);
             if(reservationsEntity != null)
@@ -90,6 +90,7 @@ namespace ReservationsApp.Services
         {
             return await _context.Reservations.AsNoTracking().Where(r => r.BookedByUserId != null && r.BookedByUserId == userId).Select(r => ReservationsMapper.FromEntity(r)).ToListAsync();
         }
+
     }
 
     public interface IReservationService
@@ -97,7 +98,7 @@ namespace ReservationsApp.Services
         Task<int> AddReservation(Reservation model);
         public void UpdateBookedReservation(Reservation model);
         public void UpdateOfferByOwner(Reservation reservation);
-        public void Delete(int id);
+        public void DeleteOffer(int id);
         public Reservation? FindReservationById(int id);
         Task<Reservation?> FindReservationByIdAsync(int id);
         List<Reservation> FindAllReservations();

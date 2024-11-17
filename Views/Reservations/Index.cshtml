@@ -2,7 +2,32 @@
 
 <h1>List of available reservations</h1>
 <a class="btn btn-primary" asp-action="AddReservation" asp-controller="Reservations">Offer Reservation</a>
-<a class="btn btn-primary" asp-action="" asp-controller="Reservations">Search for Reservation</a>
+
+<br />
+<br />
+<br />
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            <label>Search by:</label>
+            <select name="SearchField" class="form-select">
+                <option value="Voivodeship" selected="@(ViewData["CurrentField"]?.ToString() == "Voivodeship" ? "selected" : null)">Voivodeship</option>
+                <option value="City" selected="@(ViewData["CurrentField"]?.ToString() == "City")">City</option>
+                <option value="StreetAndNumber" selected="@(ViewData["CurrentField"]?.ToString() == "StreetAndNumber")">Street and Number</option>
+                <option value="DateAndTime" selected="@(ViewData["CurrentField"]?.ToString() == "DateAndTime")">Date and Time</option>
+                <option value="AvailableTime" selected="@(ViewData["CurrentField"]?.ToString() == "AvailableTime")">Available Time</option>
+                <option value="NumberOfSeats" selected="@(ViewData["CurrentField"]?.ToString() == "NumberOfSeats")">Number of Seats</option>
+                <option value="PricePerHour" selected="@(ViewData["CurrentField"]?.ToString() == "PricePerHour")">Price per Hour</option>
+                <option value="UserEmail" selected="@(ViewData["CurrentField"]?.ToString() == "UserEmail")">User Email</option>
+            </select>
+        </p>
+        <p>
+            <label>Search value: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" /></label>
+            <input type="submit" value="Search" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Reset</a>
+        </p>
+    </div>
+</form>
 
 @if(Model.Count > 0)
 {
@@ -10,28 +35,28 @@
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].Voivodeship)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["VoivodeshipSortParm"]">@Html.DisplayNameFor(model => model[0].Voivodeship)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].City)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["CitySortParm"]">@Html.DisplayNameFor(model => model[0].City)</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model[0].StreetAndNumber)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].DateAndTime)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["DateAndTimeSortParm"]">@Html.DisplayNameFor(model => model[0].DateAndTime)</a>
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].AvailableTime) 
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["AvailableTimeSortParm"]">@Html.DisplayNameFor(model => model[0].AvailableTime)</a> 
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].NumberOfSeats)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["NumberOfSeatsSortParm"]">@Html.DisplayNameFor(model => model[0].NumberOfSeats)</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model[0].Comment)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model[0].PricePerHour)
+                    <a asp-action="Index" asp-route-sortOrder="@ViewData["PricePerHourSortParm"]">@Html.DisplayNameFor(model => model[0].PricePerHour)</a>
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model[0].UserEmail)

@@ -1,0 +1,66 @@
+﻿@model Reservation
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header text-center bg-danger text-white">
+                    <h4>Confirm Deletion</h4>
+                </div>
+                <div class="card-body">
+                    <h5>Are you sure you want to delete this offer?</h5>
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Voivodeship:</th>
+                            <td>@Model.Voivodeship</td>
+                        </tr>
+                        <tr>
+                            <th>City:</th>
+                            <td>@Model.City</td>
+                        </tr>
+                        <tr>
+                            <th>Street and Number:</th>
+                            <td>@Model.StreetAndNumber</td>
+                        </tr>
+                        <tr>
+                            <th>Date and Time:</th>
+                            <td>@Model.DateAndTime</td>
+                        </tr>
+                        <tr>
+                            <th>Available Time (minutes):</th>
+                            <td>@Model.AvailableTime</td>
+                        </tr>
+                        <tr>
+                            <th>Number of Seats:</th>
+                            <td>@Model.NumberOfSeats</td>
+                        </tr>
+                        <tr>
+                            <th>Comment:</th>
+                            <td>@Model.Comment</td>
+                        </tr>
+                        <tr>
+                            <th>Price per Hour:</th>
+                            <td>@Model.PricePerHour</td>
+                        </tr>
+                    </table>
+
+                    <div class="d-flex justify-content-between">
+                        <form asp-action="DeleteOffer">
+                        <input asp-for="ReservationId" type="hidden" />
+                            <button class="btn btn-danger" type="submit">Yes, delete</button>
+                        </form>
+                        <a class="btn btn-outline-dark" href="@Url.Action("UserOffers", "Reservations")">No, cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

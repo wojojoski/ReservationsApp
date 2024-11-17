@@ -52,10 +52,7 @@
                     <td>@reservation.PricePerHour $</td>
                     <td>
                         <a class="btn btn-outline-primary" asp-controller="Reservations" asp-action="EditOffer" asp-route-id="@reservation.ReservationId">Edit</a>
-@*                     <form asp-action="EditOffer" asp-controller="Reservations" method="post">
-                        <input type="hidden" name="id" value="@reservation.ReservationId"/>
-                        <button type="submit" class="btn btn-primary">Edit</button>
-                    </form> *@
+                        <a class="btn btn-danger" asp-controller="Reservations" asp-action="DeleteOffer" asp-route-id="@reservation.ReservationId">Delete</a>
                     </td>
                 </tr>
             }
