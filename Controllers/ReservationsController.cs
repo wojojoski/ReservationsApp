@@ -3,6 +3,7 @@ using ReservationsApp.Models;
 using Microsoft.AspNetCore.Authorization;
 using ReservationsApp.Services;
 using Microsoft.AspNetCore.Identity;
+using ReservationsApp.ClassLibrary;
 
 namespace ReservationsApp.Controllers
 {
@@ -17,14 +18,26 @@ namespace ReservationsApp.Controllers
             _userManager = userManager;
         }
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string sortOrder, string searchString, string searchField)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, string searchField, string currentFilter, int? pageNumber)
         {
+
+            ViewData["CurrentSort"] = sortOrder;
+
             ViewData["VoivodeshipSortParm"] = sortOrder == "Voivodeship" ? "voivodeship_desc" : "Voivodeship";
             ViewData["CitySortParm"] = sortOrder == "City" ? "city_desc" : "City";
             ViewData["DateAndTimeSortParm"] = sortOrder == "DateAndTime" ? "dateAndTime_desc" : "DateAndTime";
             ViewData["AvailableTimeSortParm"] = sortOrder == "AvailableTime" ? "availableTime_desc" : "AvailableTime";
             ViewData["NumberOfSeatsSortParm"] = sortOrder == "NumberOfSeats" ? "numberOfSeats_desc" : "NumberOfSeats";
             ViewData["PricePerHourSortParm"] = sortOrder == "PricePerHour" ? "pricePerHour_desc" : "PricePerHour";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
 
             ViewData["CurrentFilter"] = searchString;
             ViewData["CurrentField"] = searchField;
@@ -89,7 +102,10 @@ namespace ReservationsApp.Controllers
                     break;
             }
 
-            return View(reservations);
+            int pageSize = 3;
+
+            //return View(reservations);
+            return View(await PaginatedList<Reservation>.CreateAsync(reservations, pageNumber ?? 1, pageSize));
         }
 
         [HttpGet]

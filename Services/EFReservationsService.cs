@@ -20,7 +20,7 @@ namespace ReservationsApp.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public EFReservationsService (AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public EFReservationsService(AppDbContext context, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _userManager = userManager;
@@ -29,17 +29,21 @@ namespace ReservationsApp.Services
 
         public async Task<int> AddReservation(Reservation reservations)
         {
-            var userName = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Name);
-            reservations.UserEmail = userName;
-            var x = _context.Reservations.Add(ReservationsMapper.ToEntity(reservations));
-            _context.SaveChanges();
-            return x.Entity.ReservationId;
+            try
+            {
+                var userName = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.Name);
+                reservations.UserEmail = userName;
+                var x = _context.Reservations.Add(ReservationsMapper.ToEntity(reservations));
+                _context.SaveChanges();
+                return x.Entity.ReservationId;
+            }
+            catch (Exception ex) { throw new Exception("Error adding reservation", ex); }
         }
 
         public void UpdateBookedReservation(Reservation model)
         {
             var existingEntity = _context.Reservations.Find(model.ReservationId);
-            if(existingEntity != null)
+            if (existingEntity != null)
             {
                 existingEntity.IsBooked = model.IsBooked;
                 existingEntity.BookedByUserId = model.BookedByUserId;
@@ -48,10 +52,11 @@ namespace ReservationsApp.Services
         }
         public void UpdateOfferByOwner(Reservation reservation)
         {
-            var offerToEdit = _context.Reservations.AsNoTracking().FirstOrDefault(x => x.ReservationId == reservation.ReservationId);
-            if(offerToEdit != null)
+            var offerToEdit = _context.Reservations.Find(reservation.ReservationId);
+            if (offerToEdit != null)
             {
-                _context.Reservations.Update(ReservationsMapper.ToEntity(reservation));
+                var updatedEntity = ReservationsMapper.ToEntity(reservation);
+                _context.Entry(offerToEdit).CurrentValues.SetValues(updatedEntity);
                 _context.SaveChanges();
             }
         }
@@ -59,7 +64,7 @@ namespace ReservationsApp.Services
         public void DeleteOffer(int id)
         {
             ReservationsEntity? reservationsEntity = _context.Reservations.Find(id);
-            if(reservationsEntity != null)
+            if (reservationsEntity != null)
             {
                 _context.Remove(reservationsEntity);
                 _context.SaveChanges();
@@ -77,11 +82,28 @@ namespace ReservationsApp.Services
             return entity != null ? ReservationsMapper.FromEntity(entity) : null;
         }
 
+        //public IQueryable<Reservation> FindAllReservations()
+        //{
+        //    var reservationsQuery = _context.Reservations
+        //        .Where(r => r.IsBooked != true)
+        //        .AsNoTracking()
+        //        .Select(r => ReservationsMapper.FromEntity(r));
+
+        //    return reservationsQuery;
+        //}
+
         public List<Reservation> FindAllReservations()
         {
-            return _context.Reservations.Where(r=> r.IsBooked != true).Select(x => ReservationsMapper.FromEntity(x)).ToList();
+            var reservationsList = _context.Reservations
+                .Where(r => r.IsBooked != true)
+                .AsNoTracking()
+                .Select(r => ReservationsMapper.FromEntity(r))
+                .ToList();
+
+            return reservationsList;
         }
-        
+
+
         public async Task<List<Reservation>> FindReservationsByUserEmailAsync(string userEmail)
         {
             return await _context.Reservations.Where(r => r.UserEmail == userEmail).Select(r => ReservationsMapper.FromEntity(r)).ToListAsync();
@@ -101,6 +123,7 @@ namespace ReservationsApp.Services
         public void DeleteOffer(int id);
         public Reservation? FindReservationById(int id);
         Task<Reservation?> FindReservationByIdAsync(int id);
+        //IQueryable<Reservation> FindAllReservations();
         List<Reservation> FindAllReservations();
         Task<List<Reservation>> FindReservationsByUserEmailAsync(string userEmail);
         Task<List<Reservation>> FindBookedReservationsByUserIdAsync(string userId);
